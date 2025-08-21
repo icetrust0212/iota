@@ -52,7 +52,8 @@ from miner.utils.utils import (
     extract_filename_from_url,
     upload_file,
 )
-
+import os
+import fcntl
 
 class HealthServerMixin:
     health_app_runner: Optional[web.AppRunner] = None
@@ -213,10 +214,28 @@ class Miner(BaseNeuron, HealthServerMixin):
         # Check if any of the activations in the cache have timed out and remove them
         self.state_manager.check_if_timeout(timeout=common_settings.ACTIVATION_CACHE_TIMEOUT)
 
-        response: ActivationResponse | dict = await MinerAPIClient.get_activation(hotkey=self.wallet.hotkey)
-        response = await self.parse_response(response)
+        # response: ActivationResponse | dict = await MinerAPIClient.get_activation(hotkey=self.wallet.hotkey)
+        # response = await self.parse_response(response)
+        # if not response:
+        #     raise Exception("Error getting activation")
+
+        # check if activation_queue includes backward activations
+        response: ActivationResponse | None = self.pop_activation_from_file("backward")
+
+        logger.info(f"Backward response: {response}, {await self.state_manager.out_of_cache()}")
         if not response:
-            raise Exception("Error getting activation")
+            if await self.state_manager.out_of_cache():
+                return
+            
+            response = self.pop_activation_from_file("forward")
+            logger.info(f"Forward response: {response}")
+            if not response:
+                if self.state_manager.layer != 0:
+                    # No activation available, just return
+                    return
+        if not response or response is None:
+            logger.info(f"Not available activations..")
+            return
 
         if response.direction == "forward":
             await self.forward(response)
@@ -563,6 +582,10 @@ class Miner(BaseNeuron, HealthServerMixin):
                 self.state_manager.set_layer(assigned_layer)
                 self.state_manager.training_epoch_when_registered = current_epoch
 
+                try:
+                    await self.save_registration_data_in_file()
+                except Exception as e:
+                    logger.error(f"Failed to save registration data into file")
                 logger.success(
                     f"✅ Miner {self.hotkey[:8]} registered successfully in layer {self.state_manager.layer} on training epoch {current_epoch}"
                 )
@@ -1143,6 +1166,97 @@ class Miner(BaseNeuron, HealthServerMixin):
                 raise LayerStateException(
                     f"Miner {self.hotkey[:8]} is out of sync with the orchestrator. Miner is waiting for orchestrator to be in state {state}, but orchestrator is in state {response}, setting state to training"
                 )
+            
+        
+    def pop_activation_from_file(self, direction: str, base_dir: str = ".", retry_delay: float = 0.1) -> ActivationResponse | None:
+        """
+        Pops the first activation from the given direction's activations file.
+        Uses file locking to avoid race conditions.
+        Returns the activation dict or None if file is empty.
+        Retries until it can safely access the file.
+        """
+        filename = f"{direction}_activations.jsonl"
+        filepath = os.path.join(base_dir, filename)
+
+        while True:
+            try:
+                if not os.path.exists(filepath):
+                    return None
+
+                with open(filepath, "r+") as f:
+                    # Try to acquire an exclusive lock
+                    fcntl.flock(f, fcntl.LOCK_EX)
+                    lines = f.readlines()
+                    if not lines:
+                        fcntl.flock(f, fcntl.LOCK_UN)
+                        return None
+
+                    # Get the first activation and remove it from the file
+                    activation_line = lines[0]
+                    activation = json.loads(activation_line)
+                    activation = ActivationResponse(**activation) if isinstance(activation, dict) else None
+
+                    # Move file pointer to start and write back the rest
+                    f.seek(0)
+                    f.truncate()
+                    f.writelines(lines[1:])
+                    f.flush()
+                    os.fsync(f.fileno())
+                    fcntl.flock(f, fcntl.LOCK_UN)
+                    return activation
+
+            except Exception as e:
+                # If file is locked or another error occurs, wait and retry
+                logger.error(f"Error while reading activation files: {e}")
+                time.sleep(retry_delay)
+
+    def get_forward_activation_count(self, base_dir: str = ".") -> int:
+        """
+        Returns the number of forward activations in the forward_activations.jsonl file.
+        """
+        filename = "forward_activations.jsonl"
+        filepath = os.path.join(base_dir, filename)
+        count = 0
+
+        if not os.path.exists(filepath):
+            return 0
+
+        try:
+            with open(filepath, "r") as f:
+                # Optionally lock for reading, but not strictly necessary for counting
+                fcntl.flock(f, fcntl.LOCK_SH)
+                count = sum(1 for _ in f)
+                fcntl.flock(f, fcntl.LOCK_UN)
+        except Exception as e:
+            logger.warning(f"Error counting forward activations: {e}")
+            return 0
+
+        return count
+
+    async def save_registration_data_in_file(self, base_dir: str = "."):
+        filename = f"registration_data.json"
+        filepath = os.path.join(base_dir, filename)
+
+        # Prepare data
+        data = {
+            "layer": self.state_manager.layer,
+        }
+        line = json.dumps(data)
+
+        # Try to save with file locking and retry on conflict
+        while True:
+            try:
+                with open(filepath, "w") as f:
+                    fcntl.flock(f, fcntl.LOCK_EX)
+                    f.write(line)
+                    f.flush()
+                    os.fsync(f.fileno())
+                    fcntl.flock(f, fcntl.LOCK_UN)
+                logger.info(f"Saved registration data to {filepath}")
+                break
+            except Exception as e:
+                logger.warning(f"File access conflict, retrying: {e}")
+                time.sleep(0.1)  # Wait before retrying
 
 
 if __name__ == "__main__":
