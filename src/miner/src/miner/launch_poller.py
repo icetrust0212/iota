@@ -71,15 +71,12 @@ class ActivationPoller:
             if error_name == LayerStateError.__name__:
                 logger.warning(f"Layer state change: {response['error_dict']}")
                 error_dict = LayerStateError(**response["error_dict"])
-                self.state_manager.set_state(error_dict.actual_status)
                 raise LayerStateException(
-                    f"Miner {self.hotkey[:8]} is moving state from {error_dict.expected_status} to {error_dict.actual_status}"
+                    f"Miner {self.wallet.hotkey[:8]} is moving state from {error_dict.expected_status} to {error_dict.actual_status}"
                 )
             if error_name == MinerNotRegisteredError.__name__:
                 logger.error(f"Miner not registered error: {response['error_dict']}")
-                await self.register()
-                self.state_manager.reset()
-                raise MinerNotRegisteredException(f"Miner {self.hotkey[:8]} not registered")
+                raise MinerNotRegisteredException(f"Miner {self.wallet.hotkey[:8]} not registered")
             if error_name == SpecVersionError.__name__:
                 logger.error(f"Spec version mismatch: {response['error_dict']}")
                 raise SpecVersionException(
@@ -92,6 +89,7 @@ class ActivationPoller:
     async def activation_polling(self):
         try:
             response: ActivationResponse | dict = await MinerAPIClient.get_activation(hotkey=self.wallet.hotkey)
+            logger.info(f"Response: {response}")
             response = await self.parse_response(response)
             if not response:
                 raise Exception("Error getting activation")
@@ -100,21 +98,6 @@ class ActivationPoller:
         except Exception as e:
             logger.error(f"Error in activation response handler: {e}")
 
-    async def register_miner(self):
-        try:
-            response: MinerRegistrationResponse = await MinerAPIClient.register_miner_request(
-                hotkey=self.wallet.hotkey
-            )
-
-            if response.layer is None:
-                raise Exception(
-                    f"Miner {self.hotkey[:8]} registered with no layer assigned, this should not happen"
-                )
-            self.layer = int(response.layer)
-        except Exception as e:
-            logger.error(f"Error while registering: {e}")
-
-
     async def activation_polling_shooter(self, interval: float = 1.0):
         while True:
             if self.layer is not None:
@@ -122,9 +105,6 @@ class ActivationPoller:
                     asyncio.create_task(self.activation_polling())
                 except Exception as e:
                     logger.error(f"Activation fire-and-forget worker error: {e}")
-            else:
-                logger.warning(f"Not get registration data yet, registering..")
-                await self.register_miner()
             await asyncio.sleep(interval)
 
     def _parse_iso8601(self,ts: str) -> float:
