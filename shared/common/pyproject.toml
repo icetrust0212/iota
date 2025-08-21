@@ -13,9 +13,19 @@ dependencies = [
     "pydantic>=2.11.3",
     "requests>=2.31.0",
     "substrate-interface>=1.7.11",
+    "pytest>=8.4.1",
     "pytest-asyncio>=1.0.0",
+    "pytest-mock>=3.14.1",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto"

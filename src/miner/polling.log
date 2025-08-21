@@ -947,3 +947,495 @@ Making orchestrator request | method: GET | path: /miner/get_activation
 2025-08-21 01:08:36.396 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
 2025-08-21 01:08:36.396 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
 2025-08-21 01:08:36.397 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:08:41.006 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:08:43.140 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:08:43.141 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:08:43.141 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:08:43.142 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:08:46.009 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:08:46.349 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:08:46.350 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:08:46.350 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:08:46.351 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:08:51.012 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:08:51.354 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:08:51.354 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:08:51.354 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:08:51.356 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:08:56.017 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:08:56.654 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:08:56.654 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:08:56.655 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:08:56.656 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:01.022 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:01.645 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:01.645 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:01.645 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:01.646 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:06.028 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:06.554 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:06.554 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:06.554 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:06.555 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:11.033 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:12.702 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:12.702 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:12.702 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:12.704 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:16.038 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:17.056 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:17.056 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:17.056 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:17.057 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:21.042 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:21.741 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:21.742 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:21.742 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:21.743 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:26.042 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:27.588 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:27.588 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:27.588 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:27.590 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:30.562 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:09:30.562 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:09:31.044 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:31.500 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:31.500 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:31.500 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:31.502 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:36.049 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:37.436 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:37.436 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:37.436 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:37.438 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:41.053 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:41.407 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:41.407 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:41.407 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:41.408 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:46.058 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:46.451 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:46.452 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:46.452 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:46.453 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:51.063 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:52.154 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:52.154 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:52.154 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:52.155 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:09:56.067 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:09:56.472 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:09:56.472 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:09:56.473 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:09:56.474 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:01.072 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:01.635 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:01.635 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:01.635 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:01.637 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:06.078 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:07.241 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:07.241 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:07.242 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:07.243 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:11.082 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:11.475 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:11.476 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:11.476 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:11.477 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:16.085 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:17.425 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:17.425 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:17.426 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:17.427 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:21.089 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:24.166 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:24.167 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:24.167 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:24.169 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:26.091 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:26.449 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:26.450 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:26.450 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:26.452 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:30.567 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:10:30.568 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:10:31.092 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:31.786 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:31.786 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:31.786 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:31.787 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:36.098 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:37.262 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:37.262 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:37.263 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:37.264 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:41.103 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:41.443 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:41.443 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:41.443 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:41.445 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:46.108 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:47.078 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:47.078 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:47.078 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:47.080 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:51.114 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:52.580 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:52.580 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:52.580 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:52.581 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:10:56.118 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:10:57.400 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:10:57.400 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:10:57.401 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:10:57.402 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:01.122 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:01.572 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:01.572 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:01.573 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:01.574 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:06.128 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:06.974 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:06.974 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:06.974 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:06.976 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:11.134 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:14.299 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:14.300 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:14.300 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:14.302 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:16.136 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:16.530 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:16.530 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:16.530 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:16.532 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:21.142 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:22.216 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:22.216 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:22.216 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:22.218 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:26.146 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:26.506 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:26.506 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:26.507 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:26.508 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:30.572 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:11:30.572 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:11:31.148 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:31.540 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:31.540 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:31.540 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:31.541 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:36.154 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:37.088 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:37.089 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:37.089 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:37.091 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:41.159 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:41.943 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:41.943 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:41.943 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:41.944 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:46.163 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:46.561 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:46.561 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:46.562 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:46.563 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:51.169 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:53.920 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:53.921 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:53.921 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:53.922 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:11:56.173 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:11:56.756 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:11:56.757 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:11:56.757 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:11:56.758 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:01.175 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:02.853 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:02.854 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:02.854 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:02.855 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:06.178 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:06.534 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:06.534 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:06.534 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:06.535 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:11.183 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:11.590 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:11.591 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:11.591 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:11.592 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:16.186 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:18.987 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:18.988 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:18.988 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:18.989 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:21.189 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:23.008 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:23.008 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:23.009 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:23.010 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:26.193 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:27.825 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:27.826 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:27.826 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:27.827 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:30.576 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:12:30.576 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:12:31.195 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:31.532 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:31.532 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:31.533 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:31.534 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:36.199 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:37.180 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:37.180 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:37.180 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:37.181 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:41.204 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:41.703 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:41.703 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:41.703 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:41.705 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:46.210 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:46.618 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:46.618 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:46.618 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:46.619 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:51.214 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:51.553 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:51.553 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:51.553 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:51.555 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:12:56.219 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:12:56.703 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:12:56.704 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:12:56.704 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:12:56.706 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:01.224 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:01.560 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:01.561 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:01.561 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:01.563 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:06.229 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:06.649 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:06.649 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:06.649 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:06.651 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:11.234 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:11.875 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:11.875 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:11.875 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:11.877 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:16.240 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:16.648 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:16.648 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:16.648 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:16.649 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:21.245 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:22.800 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:22.801 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:22.801 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:22.803 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:26.248 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:27.049 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:27.050 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:27.050 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:27.052 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:30.581 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:13:30.581 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:13:31.250 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:33.766 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:33.767 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:33.767 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:33.769 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:36.253 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:37.066 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:37.067 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:37.067 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:37.068 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:41.259 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:41.653 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:41.653 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:41.654 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:41.655 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:46.263 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:46.697 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:46.697 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:46.697 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:46.698 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:51.269 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:51.845 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:51.845 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:51.845 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:51.846 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:13:56.274 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:13:56.666 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:13:56.666 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:13:56.666 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:13:56.668 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:01.279 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:03.179 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:03.180 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:03.180 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:03.181 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:06.283 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:06.673 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:06.674 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:06.674 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:06.675 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:11.285 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:11.958 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:11.958 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:11.958 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:11.959 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:16.291 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:18.968 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:18.968 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:18.968 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:18.970 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:21.293 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:22.066 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:22.067 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:22.067 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:22.068 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:26.298 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:27.157 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:27.157 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:27.157 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:27.158 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:30.584 | ERROR    | __main__:prune_old_activations:164 - Failed to prune outdated activations [Errno 2] No such file or directory: './forward_activations.jsonl'
+2025-08-21 01:14:30.584 | INFO     | __main__:get_registration_data:182 - Read registration data from registration_data.json: layer: 2
+2025-08-21 01:14:31.299 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:32.096 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:32.097 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:32.097 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:32.098 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:36.304 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:37.119 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:37.119 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:37.119 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:37.120 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:41.309 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:41.725 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:41.726 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:41.726 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:41.727 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:46.315 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:46.779 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:46.779 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:46.779 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:46.781 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:51.319 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:51.952 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:51.953 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:51.953 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:51.954 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:14:56.323 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:14:56.985 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:14:56.985 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:14:56.985 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:14:56.987 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:15:01.329 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:15:02.173 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:15:02.174 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:15:02.174 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:15:02.175 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:15:06.334 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:15:07.477 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:15:07.477 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:15:07.477 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:15:07.479 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:15:11.338 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:15:11.815 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:15:11.815 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:15:11.815 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:15:11.816 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
+2025-08-21 01:15:16.343 | DEBUG    | subnet.common_api_client:orchestrator_request:24 - 
+Making orchestrator request | method: GET | path: /miner/get_activation
+2025-08-21 01:15:16.989 | DEBUG    | subnet.common_api_client:orchestrator_request:83 - Successfully completed request to /miner/get_activation
+2025-08-21 01:15:16.989 | INFO     | __main__:activation_polling:92 - Response: {'error_name': 'LayerStateError', 'error_dict': {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}}
+2025-08-21 01:15:16.990 | WARNING  | __main__:parse_response:72 - Layer state change: {'layer': 2, 'expected_status': 'training', 'actual_status': 'merging_partitions', 'message': 'Layer 2 is not in the expected state training, actual: merging_partitions'}
+2025-08-21 01:15:16.991 | ERROR    | __main__:activation_polling:99 - Error in activation response handler: 'builtins.Keypair' object is not subscriptable
