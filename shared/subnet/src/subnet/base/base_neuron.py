@@ -9,7 +9,7 @@ import torch
 from bittensor_wallet import Keypair
 from bittensor_wallet.mock import get_mock_wallet
 from common import settings as common_settings
-from common.models.miner_models import MetadataInfo, MinerStatus
+from common.models.miner_models import ChunkMetadata, MinerStatus
 from common.utils.partitions import MinerPartition, format_chunk_data
 from common.utils.s3_utils import download_file
 from common.utils.shared_states import LayerPhase
@@ -87,21 +87,29 @@ class BaseNeuron:
             presigned_url=partition.optimizer_state_metadata_path
         )
         optimizer_state_metadata: dict = json.loads(optimizer_state_metadata_bytes)
-        weight_metadata = MetadataInfo(
-            start_idx=weight_metadata["sections"][str(partition.chunk_number)]["start_idx"],
-            end_idx=weight_metadata["sections"][str(partition.chunk_number)]["end_idx"],
-            start_byte=weight_metadata["sections"][str(partition.chunk_number)]["start_byte"],
-            end_byte=weight_metadata["sections"][str(partition.chunk_number)]["end_byte"],
+        wm = weight_metadata["sections"][str(partition.chunk_number)]
+        om = optimizer_state_metadata["sections"][str(partition.chunk_number)]
+        weight_metadata = ChunkMetadata(
+            start_idx=wm["start_idx"],
+            end_idx=wm["end_idx"],
+            start_byte=wm["start_byte"],
+            end_byte=wm["end_byte"],
             chunk_dtype=weight_metadata["tensor"]["dtype"].split(".")[-1],
+            tensor_path=partition.weight_path,
+            metadata_path=partition.weight_metadata_path,
             chunk_number=partition.chunk_number,
+            data_type="weights",
         )
-        optimizer_state_metadata = MetadataInfo(
-            start_idx=optimizer_state_metadata["sections"][str(partition.chunk_number)]["start_idx"],
-            end_idx=optimizer_state_metadata["sections"][str(partition.chunk_number)]["end_idx"],
-            start_byte=optimizer_state_metadata["sections"][str(partition.chunk_number)]["start_byte"],
-            end_byte=optimizer_state_metadata["sections"][str(partition.chunk_number)]["end_byte"],
+        optimizer_state_metadata = ChunkMetadata(
+            start_idx=om["start_idx"],
+            end_idx=om["end_idx"],
+            start_byte=om["start_byte"],
+            end_byte=om["end_byte"],
             chunk_dtype=optimizer_state_metadata["tensor"]["dtype"].split(".")[-1],
+            tensor_path=partition.optimizer_state_path,
+            metadata_path=partition.optimizer_state_metadata_path,
             chunk_number=partition.chunk_number,
+            data_type="optimizer_state",
         )
         partition.weight_data = await format_chunk_data(weight_metadata, partition.chunk_number)
         partition.optimizer_state_data = await format_chunk_data(optimizer_state_metadata, partition.chunk_number)

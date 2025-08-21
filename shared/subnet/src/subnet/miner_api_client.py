@@ -8,7 +8,7 @@ from common.models.api_models import (
     LossReportRequest,
     MinerRegistrationResponse,
     SubmitActivationRequest,
-    SubmittedWeightsPresigned,
+    SubmittedWeightsAndOptimizerPresigned,
     SyncActivationAssignmentsRequest,
     WeightUpdate,
 )
@@ -196,17 +196,17 @@ class MinerAPIClient(CommonAPIClient):
             raise
 
     @classmethod
-    async def get_weight_path_per_layer(cls, hotkey: Keypair) -> list[SubmittedWeightsPresigned] | dict:
+    async def get_weight_path_per_layer(cls, hotkey: Keypair) -> list[SubmittedWeightsAndOptimizerPresigned] | dict:
         """Get the weight path for a given layer."""
         try:
-            response: list[SubmittedWeightsPresigned] | dict = await cls.orchestrator_request(
+            response: list[SubmittedWeightsAndOptimizerPresigned] | dict = await cls.orchestrator_request(
                 method="GET",
                 path="/miner/get_weight_path_per_layer",
                 hotkey=hotkey,
             )
             if "error_name" in response:
                 return response
-            response = [SubmittedWeightsPresigned(**weight) for weight in response]
+            response = [SubmittedWeightsAndOptimizerPresigned(**weight) for weight in response]
             return response
 
         except Exception as e:

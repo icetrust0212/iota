@@ -115,6 +115,14 @@ async def download_file(presigned_url: str):
             async with session.get(presigned_url) as response:
                 response.raise_for_status()
                 return await response.read()
+        except aiohttp.ClientResponseError as e:
+            if e.status >= 500:
+                logger.warning(
+                    f"Server error (HTTP {e.status}) downloading file from R2: {e}. This is likely a temporary R2 issue."
+                )
+            else:
+                logger.error(f"HTTP error downloading file: {e}")
+            raise
         except Exception as e:
             logger.error(f"Error downloading file from presigned URL: {e}")
             raise

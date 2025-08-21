@@ -1,12 +1,8 @@
 import json
-import time
 from typing import Literal, Optional
-from asyncio.exceptions import TimeoutError
 
-from common.models.miner_models import MetadataInfo
 from common.utils.cache import async_lru
-import numpy as np
-from subnet.utils.s3_torch import download_weights_or_optimizer_state
+from common.utils.formulas import get_num_parts
 import torch
 from bittensor_wallet import Keypair
 from common import settings as common_settings
@@ -16,7 +12,6 @@ from common.models.api_models import (
     FileUploadRequest,
     FileUploadResponse,
 )
-from common.utils.partitions import ChunkData, MinerPartition, format_chunk_data
 from common.utils.s3_utils import download_file
 from loguru import logger
 from subnet.miner_api_client import MinerAPIClient
@@ -89,71 +84,6 @@ async def download_metadata(metadata_path: str) -> dict:
     return metadata
 
 
-async def download_chunk_of_model(
-    layer: int,
-    miner_hotkey: str,
-    weights_path: str,
-    metadata_info: MetadataInfo,
-    chunk_id: int | str,
-    data_type: Literal["weights", "optimizer_state"],
-    data_path: str,
-) -> torch.Tensor:
-    """Download a chunk of the model for a miner.
-
-    Args:
-        layer (int): The layer of the model.
-        miner_hotkey (str): The hotkey of the miner.
-        weights_path (str): The path to the weights.
-        metadata_info (MetadataInfo): The metadata for the chunk.
-        chunk_id (int | str): The chunk id.
-        data_type (Literal["weights", "optimizer_state"]): The type of data to download.
-        layer (int): The layer of the model.
-        data_path (str): The path to the data.
-
-    Returns:
-        torch.Tensor: The downloaded chunk
-    """
-
-    # download the metadata
-    start_time = time.time()
-    try:
-        logger.debug(f"Miner {miner_hotkey[:8]} | layer {layer} | metadata: {metadata_info}")
-
-        # format the chunk data
-        logger.debug(f"Miner {miner_hotkey[:8]} | layer {layer} | formatting chunk data")
-        chunk_data: ChunkData = await format_chunk_data(metadata=metadata_info, chunk_id=chunk_id)
-
-        logger.debug(f"Miner {miner_hotkey[:8]} | layer {layer} | chunk_data: {chunk_data}")
-
-        partition = MinerPartition(
-            layer=layer,
-            chunk_number=chunk_id,
-            weight_path=weights_path,
-            weight_metadata_path=metadata_info.weight_metadata_path,
-            optimizer_state_metadata_path=metadata_info.optimizer_state_metadata_path,
-            miner_hotkey=miner_hotkey,
-            weight_data=chunk_data if data_type == "weights" else ChunkData(),
-            optimizer_state_data=chunk_data if data_type == "optimizer_state" else ChunkData(),
-        )
-        logger.debug(f"Miner {miner_hotkey[:8]} | layer {layer} | partition: {partition}")
-
-        # only download the chunk we need: we want to form an s3 query which includes the start and end indices
-        weights: torch.Tensor = await download_weights_or_optimizer_state(
-            path=data_path, partition=partition, data_type=data_type
-        )
-        logger.debug(f"Miner {miner_hotkey[:8]} | layer {layer} | weights: {weights}")
-
-        return weights
-    except TimeoutError as e:
-        logger.error(
-            f"Timeout error downloading chunk of model. Time taken: {time.time() - start_time} seconds. Started download at {start_time}."
-        )
-        raise
-    except Exception as e:
-        logger.exception(f"Error downloading chunk of model: {e}")
-        raise
-
-
 async def upload_file(
     hotkey: Keypair,
     data: bytes,
@@ -181,7 +111,7 @@ async def upload_file(
     """
     # TODO: We may want to set this to a more optimal value, for now we just make each part 10MB
     try:
-        num_parts = int(np.ceil(len(data) / common_settings.MAX_PART_SIZE))
+        num_parts = get_num_parts(data=data)
         if num_parts > common_settings.MAX_NUM_PARTS:
             raise ValueError(
                 f"Number of parts must be less than {common_settings.MAX_NUM_PARTS}. Your file with {len(data)} bytes doesn't fit within {common_settings.MAX_NUM_PARTS} part of 10MB each"

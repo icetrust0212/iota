@@ -1,5 +1,5 @@
 from typing import Literal
-from common.models.miner_models import MetadataInfo
+from common.models.miner_models import ChunkMetadata
 from pydantic import BaseModel
 import copy
 import random
@@ -72,7 +72,7 @@ class MinerPartition(BaseModel):
 
 
 async def format_chunk_data(
-    metadata: MetadataInfo,
+    metadata: ChunkMetadata,
     chunk_id: int | str,
 ) -> ChunkData:
     """Download a chunk from the database for a miner that will be used for butterfly all reduce merging.

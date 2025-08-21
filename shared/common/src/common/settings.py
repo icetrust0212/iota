@@ -1,6 +1,6 @@
 import os
 
-from common.configs import LLAMA32_CONFIG_100M, LLAMA32_CONFIG_1B
+from common import configs as model_configs
 from dotenv import load_dotenv
 from loguru import logger
 
@@ -17,7 +17,7 @@ LOG_FILE_ENABLED = os.getenv("LOG_FILE_ENABLED") == "True"
 TEST_MODE = os.getenv("TEST_MODE") == "True"
 
 # Bittensor settings
-__SPEC_VERSION__ = 10_002
+__SPEC_VERSION__ = 10_003
 __VALIDATOR_SPEC_VERSION__ = 4065
 BITTENSOR = os.getenv("BITTENSOR") == "True"
 MAX_NUM_PARTS = int(os.getenv("MAX_NUM_PARTS", 10000))
@@ -58,7 +58,29 @@ LRU_CACHE_TIMEOUT = 20  # seconds
 MINER_SCORES_TIME_WINDOW = 2  # hours
 
 # LLM Model Settings
-MODEL_CFG = LLAMA32_CONFIG_100M if MOCK else LLAMA32_CONFIG_1B  # TODO: change this back to 15B after testing
+MODEL_NAME = os.getenv("MODEL_NAME", "1b")
+match MODEL_NAME.lower():
+    case "100m":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_100M
+    case "1b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_1B
+    case "3b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_3B
+    case "5b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_5B
+    case "7b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_7B
+    case "8b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_8B
+    case "12b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_12B
+    case "15b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_15B
+    case "21b":
+        MODEL_CFG = model_configs.LLAMA32_CONFIG_21B
+    case _:
+        raise ValueError(f"Unknown model size: {MODEL_NAME}")
+
 MODEL_SPLITS = MODEL_CFG.pop("model_splits")
 N_LAYERS = len(MODEL_SPLITS)
 TOKENIZER_NAME = "meta-llama/Llama-3.2-1B"

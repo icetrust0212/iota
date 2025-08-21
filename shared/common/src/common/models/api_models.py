@@ -86,7 +86,7 @@ class ActivationResponse(BaseModel):
     reason: str | None = None
 
 
-class SubmittedWeightsPresigned(BaseModel):
+class SubmittedWeightsAndOptimizerPresigned(BaseModel):
     layer: int
     weights_path_presigned: str
     weight_metadata_path_presigned: str
