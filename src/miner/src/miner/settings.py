@@ -22,4 +22,3 @@ DEVICE = os.getenv("DEVICE", "cpu")
 # Training settings
 TIMEOUT = int(os.getenv("MINER_TIMEOUT", "300"))  # 5 minutes default
 PACK_SAMPLES = os.getenv("PACK_SAMPLES", "True") == "True"
-SEQUENCE_LENGTH = int(os.getenv("SEQUENCE_LENGTH", "512"))

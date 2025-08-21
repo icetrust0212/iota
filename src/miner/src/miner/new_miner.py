@@ -250,10 +250,10 @@ class Miner(BaseNeuron, HealthServerMixin):
             return torch.randn(size=(100,), dtype=torch.bfloat16).to(miner_settings.DEVICE)
 
         sample = torch.tensor(self.model_manager.tokenizer.encode(text)).to(miner_settings.DEVICE)
-        if len(sample) < miner_settings.SEQUENCE_LENGTH:
-            raise Exception(f"Sample is too short: {len(sample)} < {miner_settings.SEQUENCE_LENGTH}")
+        if len(sample) < common_settings.SEQUENCE_LENGTH:
+            raise Exception(f"Sample is too short: {len(sample)} < {common_settings.SEQUENCE_LENGTH}")
 
-        sample = sample[: miner_settings.SEQUENCE_LENGTH]
+        sample = sample[: common_settings.SEQUENCE_LENGTH]
         return sample.unsqueeze(0)
 
     async def forward(self, activation: ActivationResponse | None = None):
@@ -294,7 +294,7 @@ class Miner(BaseNeuron, HealthServerMixin):
             if not common_settings.MOCK:
                 input_activations = input_activations.reshape(
                     -1,
-                    miner_settings.SEQUENCE_LENGTH,
+                    common_settings.SEQUENCE_LENGTH,
                     common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
                 )
 
@@ -425,7 +425,7 @@ class Miner(BaseNeuron, HealthServerMixin):
             if not common_settings.MOCK:
                 activation_grads = activation_grads.reshape(
                     -1,
-                    miner_settings.SEQUENCE_LENGTH,
+                    common_settings.SEQUENCE_LENGTH,
                     common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
                 )
 
@@ -460,7 +460,7 @@ class Miner(BaseNeuron, HealthServerMixin):
                 if common_settings.MODEL_CFG["bottleneck_dim"] is not None
                 else common_settings.MODEL_CFG["emb_dim"]
             )
-            input_activation_grads = emb_weight.grad[: miner_settings.SEQUENCE_LENGTH, :grad_size]
+            input_activation_grads = emb_weight.grad[: common_settings.SEQUENCE_LENGTH, :grad_size]
 
             # Detach and convert to bfloat16 to ensure we only save the values
             input_activation_grads = input_activation_grads.detach().to(torch.bfloat16).cpu()
