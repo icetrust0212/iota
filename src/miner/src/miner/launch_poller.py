@@ -120,17 +120,21 @@ class ActivationPoller:
     async def prune_shooter(self, interval: float = 60):
         while True:
             try:
-                await self.prune_old_activations()
+                await self.prune_old_activations(direction="forward")
+                await self.prune_old_activations(direction="failed")
             except Exception as e:
                 logger.error(f"Prune error: {e}")
             await asyncio.sleep(interval)
 
-    async def prune_old_activations(self, base_dir: str = ".", max_age_minutes = 15):
+    async def prune_old_activations(self, direction: str, base_dir: str = ".", max_age_minutes = 15):
         max_age = max_age_minutes * 60
 
         # base_dir = os.path.dirname(os.path.abspath(__file__))
-        filename = f"forward_activations.jsonl"
+        filename = f"{direction}_activations.jsonl"
         filepath = os.path.join(base_dir, filename)
+
+        if not os.path.exists(filepath):
+            return
 
         try:
             now = time.time()

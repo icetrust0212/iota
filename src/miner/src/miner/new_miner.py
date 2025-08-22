@@ -54,6 +54,7 @@ from miner.utils.utils import (
 )
 import os
 import fcntl
+import random
 
 class HealthServerMixin:
     health_app_runner: Optional[web.AppRunner] = None
@@ -225,7 +226,7 @@ class Miner(BaseNeuron, HealthServerMixin):
         # check if activation_queue includes backward activations
         response: ActivationResponse | None = self.pop_activation_from_file("backward")
 
-        logger.info(f"Backward response: {response}, {await self.state_manager.out_of_cache()}")
+        logger.info(f"Backward response: {response}")
         if not response:
             if await self.state_manager.out_of_cache():
                 return
@@ -233,9 +234,13 @@ class Miner(BaseNeuron, HealthServerMixin):
             response = self.pop_activation_from_file("forward")
             logger.info(f"Forward response: {response}")
             if not response:
-                if self.state_manager.layer != 0:
-                    # No activation available, just return
-                    return
+                response = self.pop_activation_from_file("failed")
+                logger.info(f"Failed response: {response}")
+                
+                if not response:
+                    if self.state_manager.layer != 0:
+                        # No activation available, just return
+                        return
         if not response or response is None:
             logger.info(f"Not available activations..")
             return
@@ -286,64 +291,72 @@ class Miner(BaseNeuron, HealthServerMixin):
         logger.info(
             f"🚀 Starting FORWARD pass for layer {self.state_manager.layer} | Processing activation {activation.activation_id} | Miner: {self.hotkey[:8]}"
         )
-        if self.state_manager.layer == 0:
-            # Load text file and tokenize
-            input_activations = await self.download_sample(download_url=activation.presigned_download_url)
-        else:
-            # Download activation from S3
-            input_activations = await download_activation(
-                path=activation.presigned_download_url, device=miner_settings.DEVICE
-            )
-            if not common_settings.MOCK:
-                input_activations = input_activations.reshape(
-                    -1,
-                    common_settings.SEQUENCE_LENGTH,
-                    common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
+        try:
+            if self.state_manager.layer == 0:
+                # Load text file and tokenize
+                input_activations = await self.download_sample(download_url=activation.presigned_download_url)
+            else:
+                # Download activation from S3
+                input_activations = await download_activation(
+                    path=activation.presigned_download_url, device=miner_settings.DEVICE
                 )
+                if not common_settings.MOCK:
+                    input_activations = input_activations.reshape(
+                        -1,
+                        common_settings.SEQUENCE_LENGTH,
+                        common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
+                    )
 
-        # Perform the actual forward pass
-        output_activations, state = await self.model_manager._forward(
-            layer=self.state_manager.layer, input_activations=input_activations
-        )
-
-        self.state_manager.add_to_cache(
-            activation.activation_id,
-            CacheEntry(
-                input_activations=input_activations,
-                output_activations=output_activations,
-                state=state,
-                upload_time=time.time(),
-            ),
-        )
-
-        if self.state_manager.layer == common_settings.N_LAYERS - 1:
-            await self.compute_last_layer_loss(
-                output_activations=output_activations,
-                input_activation_response=activation,
-                state=state,
-                input_activations=input_activations,
+            # Perform the actual forward pass
+            output_activations, state = await self.model_manager._forward(
+                layer=self.state_manager.layer, input_activations=input_activations
             )
-            return await self.backward(activation=activation)
 
-        # If we are not on the last layer, we just need to upload the activations
-        upload_response = await self.upload_tensor(
-            tensor=output_activations.detach().clone(),
-            direction="forward",
-        )
-        upload_response = await self.parse_response(response=upload_response)
+            self.state_manager.add_to_cache(
+                activation.activation_id,
+                CacheEntry(
+                    input_activations=input_activations,
+                    output_activations=output_activations,
+                    state=state,
+                    upload_time=time.time(),
+                ),
+            )
 
-        response = await MinerAPIClient.submit_activation_request(
-            hotkey=self.wallet.hotkey,
-            submit_activation_request=SubmitActivationRequest(
-                activation_id=activation.activation_id,
-                activation_path=upload_response.object_path,
+            if self.state_manager.layer == common_settings.N_LAYERS - 1:
+                await self.compute_last_layer_loss(
+                    output_activations=output_activations,
+                    input_activation_response=activation,
+                    state=state,
+                    input_activations=input_activations,
+                )
+                return await self.backward(activation=activation)
+
+            # If we are not on the last layer, we just need to upload the activations
+            upload_response = await self.upload_tensor(
+                tensor=output_activations.detach().clone(),
                 direction="forward",
-            ),
-        )
-        response = await self.parse_response(response=response)
-        logger.info(
-            f"✅ Successfully completed FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
-        )
+            )
+            upload_response = await self.parse_response(response=upload_response)
+
+            response = await MinerAPIClient.submit_activation_request(
+                hotkey=self.wallet.hotkey,
+                submit_activation_request=SubmitActivationRequest(
+                    activation_id=activation.activation_id,
+                    activation_path=upload_response.object_path,
+                    direction="forward",
+                ),
+            )
+            response = await self.parse_response(response=response)
+            logger.info(
+                f"✅ Successfully completed FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
+            )
+        except Exception as e:
+            logger.error(
+                f"❌ Error during FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}: {e}"
+            )
+            # Save this activation in separated jsonl file
+            await self.save_failed_activation(activation)
+            raise e
 
     async def compute_last_layer_loss(
         self,
@@ -414,83 +427,91 @@ class Miner(BaseNeuron, HealthServerMixin):
             f"🔄 Starting BACKWARD pass for activation {activation.activation_id} | Layer: {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
         )
 
-        # Check if activation is in cache
-        if activation.activation_id not in self.state_manager.cache:
-            logger.warning(f"⚠️ Activation {activation.activation_id} not found in cache, skipping backward pass")
-            return
-        activation_grads = None
-        if self.state_manager.layer != common_settings.N_LAYERS - 1 and common_settings.N_LAYERS > 1:
-            # For backward pass, we need to get activations that we have cached forward activations for
-            # So we still need to list first, then filter, then randomly select
-            activation_grads: torch.Tensor = await download_activation(
-                path=activation.presigned_download_url, device=miner_settings.DEVICE
-            )
-            if not common_settings.MOCK:
-                activation_grads = activation_grads.reshape(
-                    -1,
-                    common_settings.SEQUENCE_LENGTH,
-                    common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
+        try:
+            # Check if activation is in cache
+            if activation.activation_id not in self.state_manager.cache:
+                logger.warning(f"⚠️ Activation {activation.activation_id} not found in cache, skipping backward pass")
+                return
+            activation_grads = None
+            if self.state_manager.layer != common_settings.N_LAYERS - 1 and common_settings.N_LAYERS > 1:
+                # For backward pass, we need to get activations that we have cached forward activations for
+                # So we still need to list first, then filter, then randomly select
+                activation_grads: torch.Tensor = await download_activation(
+                    path=activation.presigned_download_url, device=miner_settings.DEVICE
                 )
+                if not common_settings.MOCK:
+                    activation_grads = activation_grads.reshape(
+                        -1,
+                        common_settings.SEQUENCE_LENGTH,
+                        common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
+                    )
 
-        # Get activations from cache and move back to GPU
-        cached_activations = self.state_manager.cache[activation.activation_id]
+            # Get activations from cache and move back to GPU
+            cached_activations = self.state_manager.cache[activation.activation_id]
 
-        # Move to GPU and enable gradients only for floating point tensors
-        input_activations: torch.Tensor = cached_activations.input_activations.to(miner_settings.DEVICE)
-        output_activations: torch.Tensor = cached_activations.output_activations.to(miner_settings.DEVICE)
+            # Move to GPU and enable gradients only for floating point tensors
+            input_activations: torch.Tensor = cached_activations.input_activations.to(miner_settings.DEVICE)
+            output_activations: torch.Tensor = cached_activations.output_activations.to(miner_settings.DEVICE)
 
-        state = cached_activations.state
+            state = cached_activations.state
 
-        await self.model_manager._backward(
-            layer=self.state_manager.layer,
-            output_activations=output_activations,
-            activation_grads=activation_grads,
-            state=state,
-        )
-
-        self.state_manager.backwards_since_reset += 1
-        logger.debug(f"Backwards since reset for miner {self.hotkey[:8]}: {self.state_manager.backwards_since_reset}")
-        # Handle different cases for input activation gradients
-        if common_settings.MOCK:
-            input_activation_grads = input_activations.detach().to(torch.bfloat16).cpu()
-
-        elif self.state_manager.layer == 0:
-            # Get the embedding layer weight grads instead of the input activations grads
-            # This is because input activation grads of the first layer do not exist.
-            emb_weight = self.model_manager.model.tok_emb.weight
-            grad_size = (
-                common_settings.MODEL_CFG["bottleneck_dim"]
-                if common_settings.MODEL_CFG["bottleneck_dim"] is not None
-                else common_settings.MODEL_CFG["emb_dim"]
+            await self.model_manager._backward(
+                layer=self.state_manager.layer,
+                output_activations=output_activations,
+                activation_grads=activation_grads,
+                state=state,
             )
-            input_activation_grads = emb_weight.grad[: common_settings.SEQUENCE_LENGTH, :grad_size]
 
-            # Detach and convert to bfloat16 to ensure we only save the values
-            input_activation_grads = input_activation_grads.detach().to(torch.bfloat16).cpu()
+            self.state_manager.backwards_since_reset += 1
+            logger.debug(f"Backwards since reset for miner {self.hotkey[:8]}: {self.state_manager.backwards_since_reset}")
+            # Handle different cases for input activation gradients
+            if common_settings.MOCK:
+                input_activation_grads = input_activations.detach().to(torch.bfloat16).cpu()
 
-        else:
-            input_activation_grads = input_activations.grad
+            elif self.state_manager.layer == 0:
+                # Get the embedding layer weight grads instead of the input activations grads
+                # This is because input activation grads of the first layer do not exist.
+                emb_weight = self.model_manager.model.tok_emb.weight
+                grad_size = (
+                    common_settings.MODEL_CFG["bottleneck_dim"]
+                    if common_settings.MODEL_CFG["bottleneck_dim"] is not None
+                    else common_settings.MODEL_CFG["emb_dim"]
+                )
+                input_activation_grads = emb_weight.grad[: common_settings.SEQUENCE_LENGTH, :grad_size]
 
-        upload_response: CompleteFileUploadResponse = await self.upload_tensor(
-            tensor=input_activation_grads,
-            direction="backward",
-        )
+                # Detach and convert to bfloat16 to ensure we only save the values
+                input_activation_grads = input_activation_grads.detach().to(torch.bfloat16).cpu()
 
-        response = await MinerAPIClient.submit_activation_request(
-            hotkey=self.wallet.hotkey,
-            submit_activation_request=SubmitActivationRequest(
-                activation_id=activation.activation_id,
-                activation_path=upload_response.object_path,
+            else:
+                input_activation_grads = input_activations.grad
+
+            upload_response: CompleteFileUploadResponse = await self.upload_tensor(
+                tensor=input_activation_grads,
                 direction="backward",
-            ),
-        )
-        response = await self.parse_response(response=response)
-        # Remove from cache
-        self.state_manager.remove_from_cache(activation.activation_id)
-        logger.info(
-            f"✅ Successfully completed BACKWARD pass for activation {activation.activation_id} | Layer: {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
-        )
+            )
 
+            response = await MinerAPIClient.submit_activation_request(
+                hotkey=self.wallet.hotkey,
+                submit_activation_request=SubmitActivationRequest(
+                    activation_id=activation.activation_id,
+                    activation_path=upload_response.object_path,
+                    direction="backward",
+                ),
+            )
+            response = await self.parse_response(response=response)
+            # Remove from cache
+            self.state_manager.remove_from_cache(activation.activation_id)
+            logger.info(
+                f"✅ Successfully completed BACKWARD pass for activation {activation.activation_id} | Layer: {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
+            )
+        except Exception as e:
+            logger.error(
+                f"❌ Error during BACKWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}: {e}"
+            )
+            # Save this activation in separated jsonl file
+            await self.save_failed_activation(activation)
+            raise e
+        
     async def upload_tensor(
         self,
         tensor: torch.Tensor,
@@ -964,10 +985,47 @@ class Miner(BaseNeuron, HealthServerMixin):
                     f"Miner {self.hotkey[:8]} is out of sync with the orchestrator. Miner is waiting for orchestrator to be in state {state}, but orchestrator is in state {response}, setting state to training"
                 )
             
-        
+    async def save_failed_activation(self, activation: ActivationResponse, base_dir: str = "."):
+        # Determine file name based on direction and current UTC date
+        if not hasattr(activation, "direction") or activation.direction is None:
+            return
+        # Save in the same directory as this script
+        filename = f"failed_activations.jsonl"
+        filepath = os.path.join(base_dir, filename)
+
+        # Prepare data
+        data = activation.to_dict() if hasattr(activation, "to_dict") else activation.__dict__
+        line = json.dumps(data)
+
+        # Try to save with file locking and retry on conflict
+        while True:
+            try:
+                with open(filepath, "r+") as f:
+                    fcntl.flock(f, fcntl.LOCK_EX)
+                    lines = f.readlines()
+
+                    # Remove only the activation with matching activation_id
+                    activation_id = activation.activation_id
+                    kept = []
+                    for line in lines:
+                        obj = json.loads(line)
+                        if obj.get("activation_id") != activation_id:
+                            kept.append(line)
+
+                    f.writelines(kept)
+                    f.flush()
+                    os.fsync(f.fileno())
+
+                    fcntl.flock(f, fcntl.LOCK_UN)
+                    logger.info(f"Saved activation to {filepath}")
+                break
+            except Exception as e:
+                logger.warning(f"File access conflict, retrying: {e}")
+                time.sleep(0.1)  # Wait before retrying
+
     def pop_activation_from_file(self, direction: str, base_dir: str = ".", retry_delay: float = 0.1) -> ActivationResponse | None:
         """
-        Pops the first activation from the given direction's activations file.
+        Pops the last activation from the given direction's activations file.
         Uses file locking to avoid race conditions.
         Returns the activation dict or None if file is empty.
         Retries until it can safely access the file.
@@ -988,15 +1046,28 @@ class Miner(BaseNeuron, HealthServerMixin):
                         fcntl.flock(f, fcntl.LOCK_UN)
                         return None
 
-                    # Get the first activation and remove it from the file
-                    activation_line = lines[0]
+                    # For forward and backward activations, it takes last (latest) activation. For failed activation, it just takes random activations.
+                    idx = -1
+                    if direction == "forward" or direction == "backward":
+                        idx = -1
+                    else:
+                        idx = random.randrange(len(lines))
+
+                    activation_line = lines[idx]
                     activation = json.loads(activation_line)
                     activation = ActivationResponse(**activation) if isinstance(activation, dict) else None
+
+                    kept = lines[:idx] + lines[idx+1:]
 
                     # Move file pointer to start and write back the rest
                     f.seek(0)
                     f.truncate()
-                    f.writelines(lines[1:])
+                    
+                    if direction == "forward" or direction == "backward":
+                        f.writelines(lines[:-1])
+                    else:
+                        f.writelines(kept)
+
                     f.flush()
                     os.fsync(f.fileno())
                     fcntl.flock(f, fcntl.LOCK_UN)
