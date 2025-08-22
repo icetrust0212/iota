@@ -7,6 +7,24 @@ from miner.utils.utils import download_metadata
 from subnet.utils.s3_torch import download_weights_or_optimizer_state
 import torch
 
+"""
+4 Metadata chunks (at weight uploading)
+XXXXXXXXXXXX| XXXXXXXXXXXX| XXXXXXXXXXXX| XXXXXXXXXXXX
+
+6 Partitions (because between weight uploading and merging new miners registered, meaning we 'think' more partitions are needed)
+XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX
+
+-> We get the start & end indices from the metadata, hence
+Partition 1: XXXXXXXXXXXX|
+Partition 2: XXXXXXXXXXXX|
+Partition 3: XXXXXXXXXXXX|
+Partition 4: XXXXXXXXXXXX|
+Partition 5: Invalid (No metadata chunk found)
+Partition 6: Invalid (No metadata chunk found)
+
+--> The total amonunt of data is still consistent and we can just discard the invalid partitions.
+"""
+
 
 async def get_chunk_metadata_for_all_partitions(
     submitted_weights_and_optimizer: SubmittedWeightsAndOptimizerPresigned, partitions: list[MinerPartition]
@@ -153,9 +171,7 @@ async def filter_bad_metadata(
     """Filter out packets with bad metadata and return valid metadata info objects.
 
     Returns: dictionary mapping weight path to dictionary mapping chunk number to dictionary mapping data type to ChunkMetadata
-    """
 
-    """
     Partitions: 0,1,2,3,4,5,6,7
     Weights that were uploaded: 0,1,2
 
