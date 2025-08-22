@@ -5,3 +5,4 @@ __pycache__
 *.jsonl
 uv.lock
 *.log
+*.pt

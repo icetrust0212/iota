@@ -20,6 +20,25 @@ class CacheEntry(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
+from pathlib import Path
+from typing import Dict
+import os
+
+class DiskSnapshotCache:
+    def __init__(self, path: str = "./cache_snapshot.pt"):
+        self.path = Path(path)
+
+    def load(self) -> Dict[str, CacheEntry]:
+        if not self.path.exists():
+            return {}
+        # map_location="cpu" avoids GPU init issues on load
+        return torch.load(self.path, map_location="cpu")
+
+    def save(self, cache: Dict[str, CacheEntry]) -> None:
+        tmp = self.path.with_suffix(".tmp")
+        # atomic replace to avoid partial writes if process crashes
+        torch.save(cache, tmp)
+        os.replace(tmp, self.path)
 
 class StateManager:
     def __init__(self, wallet: Wallet) -> None:
@@ -27,7 +46,6 @@ class StateManager:
         self.layer: int = 0
         self.state: LayerPhase = LayerPhase.TRAINING
         self.direction: MinerStatus = MinerStatus.IDLE
-        self.cache: dict[str, CacheEntry] = {}
         self.backwards_since_reset: int = 0
         self.processed_activations: int = 0
         self.merge_participation_count: int = 0
@@ -37,6 +55,10 @@ class StateManager:
         self.backwards_since_sync: int = 0
         self.epoch: int = 0
         self.training_epoch_when_registered: int = None
+
+        self._disk = DiskSnapshotCache("./cache_snapshot.pt")
+        self.cache: dict[str, CacheEntry] = self._disk.load()  # load on boot
+
 
     def set_state(self, state: LayerPhase):
         self.state = state
@@ -49,9 +71,14 @@ class StateManager:
 
     def add_to_cache(self, activation_id: str, data: CacheEntry):
         self.cache[activation_id] = data
+        self._disk.save(self.cache)  # persist immediately (or batch if you prefer)
+
+    def get_from_cache(self, activation_id: str) -> CacheEntry | None:
+        return self.cache.get(activation_id)
 
     def remove_from_cache(self, activation_id: str):
         del self.cache[activation_id]
+        self._disk.save(self._cache)
 
     async def out_of_cache(self) -> bool:
         if ooc := len(self.cache) >= common_settings.MAX_ACTIVATION_CACHE_SIZE:
