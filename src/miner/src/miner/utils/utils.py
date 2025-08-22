@@ -2,7 +2,7 @@ import json
 from typing import Literal, Optional
 
 from common.utils.cache import async_lru
-from common.utils.formulas import get_num_parts
+from common.utils.formulas import calculate_num_parts
 import torch
 from bittensor_wallet import Keypair
 from common import settings as common_settings
@@ -111,7 +111,7 @@ async def upload_file(
     """
     # TODO: We may want to set this to a more optimal value, for now we just make each part 10MB
     try:
-        num_parts = get_num_parts(data=data)
+        num_parts = calculate_num_parts(data=data)
         if num_parts > common_settings.MAX_NUM_PARTS:
             raise ValueError(
                 f"Number of parts must be less than {common_settings.MAX_NUM_PARTS}. Your file with {len(data)} bytes doesn't fit within {common_settings.MAX_NUM_PARTS} part of 10MB each"

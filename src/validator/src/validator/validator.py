@@ -15,7 +15,7 @@ from loguru import logger
 from subnet.base.base_neuron import BaseNeuron
 from subnet.test_client import TestAPIClient
 from subnet.utils.bt_utils import get_subtensor
-from subnet.utils.s3_torch import download_activation
+from subnet.utils.s3_torch import download_tensor
 from subnet.validator_api_client import ValidatorAPIClient
 
 from validator import settings as validator_settings
@@ -113,10 +113,10 @@ class Validator(BaseNeuron, HealthServerMixin, BaseValidator):
         First checks magnitude ratio as a gatekeeper, then cosine similarity if magnitude check passes.
         """
 
-        validator_activations: torch.Tensor = await download_activation(
+        validator_activations: torch.Tensor = await download_tensor(
             path=validator_activation_path, device=validator_settings.DEVICE
         )
-        miner_activations: torch.Tensor = await download_activation(
+        miner_activations: torch.Tensor = await download_tensor(
             path=miner_activation_path, device=validator_settings.DEVICE
         )
 

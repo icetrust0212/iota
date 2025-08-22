@@ -54,37 +54,44 @@ async def get_chunk_metadata_for_all_partitions(
 
         metadata_infos: dict[int, dict] = {}
         for partition in partitions:
-            chunk_number = partition.chunk_number
+            try:
+                chunk_number = partition.chunk_number
 
-            # Create separate metadata info for weights and optimizer state
-            weight_metadata_info = ChunkMetadata(
-                **weight_metadata["sections"][str(chunk_number)],
-                chunk_number=chunk_number,
-                weighting_factor=submitted_weights_and_optimizer.weighting_factor,
-                tensor_path=submitted_weights_and_optimizer.weights_path_presigned,
-                metadata_path=submitted_weights_and_optimizer.weight_metadata_path_presigned,
-                chunk_dtype=weight_metadata["tensor"]["dtype"].split(".")[-1],
-                data_type="weights",
-            )
+                # Create separate metadata info for weights and optimizer state
+                weight_metadata_info = ChunkMetadata(
+                    **weight_metadata["sections"][str(chunk_number)],
+                    chunk_number=chunk_number,
+                    weighting_factor=submitted_weights_and_optimizer.weighting_factor,
+                    tensor_path=submitted_weights_and_optimizer.weights_path_presigned,
+                    metadata_path=submitted_weights_and_optimizer.weight_metadata_path_presigned,
+                    chunk_dtype=weight_metadata["tensor"]["dtype"].split(".")[-1],
+                    data_type="weights",
+                )
 
-            optimizer_state_metadata_info = ChunkMetadata(
-                **optimizer_state_metadata["sections"][str(chunk_number)],
-                chunk_number=chunk_number,
-                weighting_factor=submitted_weights_and_optimizer.weighting_factor,
-                tensor_path=submitted_weights_and_optimizer.optimizer_state_path_presigned,
-                metadata_path=submitted_weights_and_optimizer.optimizer_state_metadata_path_presigned,
-                chunk_dtype=optimizer_state_metadata["tensor"]["dtype"].split(".")[-1],
-                data_type="optimizer_state",
-            )
+                optimizer_state_metadata_info = ChunkMetadata(
+                    **optimizer_state_metadata["sections"][str(chunk_number)],
+                    chunk_number=chunk_number,
+                    weighting_factor=submitted_weights_and_optimizer.weighting_factor,
+                    tensor_path=submitted_weights_and_optimizer.optimizer_state_path_presigned,
+                    metadata_path=submitted_weights_and_optimizer.optimizer_state_metadata_path_presigned,
+                    chunk_dtype=optimizer_state_metadata["tensor"]["dtype"].split(".")[-1],
+                    data_type="optimizer_state",
+                )
 
-            metadata_infos[chunk_number] = {
-                "weights": weight_metadata_info,
-                "optimizer_state": optimizer_state_metadata_info,
-            }
+                metadata_infos[chunk_number] = {
+                    "weights": weight_metadata_info,
+                    "optimizer_state": optimizer_state_metadata_info,
+                }
+            except Exception as e:
+                logger.exception(f"Error getting chunk metadata for partition {partition.chunk_number}: {e}")
+                continue
 
         return metadata_infos
     except Exception as e:
-        logger.exception(f"Error getting chunk metadata for all partitions: {e}")
+        logger.exception(
+            f"Error getting chunk metadata for all partitions. This is likely due to bad metadata being uploaded but is not a fatal error.: {e}"
+        )
+        logger.warning(f"Bad metadata; WEIGHTS: {weight_metadata} | OPTIMIZER STATE: {optimizer_state_metadata}")
         return None
 
 
@@ -196,7 +203,11 @@ async def filter_bad_metadata(
             for s in submitted_weights_and_optimizers
         ]
     )
-    valid_metadata = {s.weights_path_presigned: r for s, r in zip(submitted_weights_and_optimizers, results)}
+    valid_metadata = {
+        s.weights_path_presigned: r
+        for s, r in zip(submitted_weights_and_optimizers, results, strict=True)
+        if r is not None
+    }
 
     if not valid_metadata:
         logger.warning("No valid metadata found")

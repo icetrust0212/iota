@@ -10,8 +10,8 @@ from subnet.utils.vector_utils import check_for_nans_and_infs
 from asyncio.exceptions import TimeoutError
 
 
-async def download_activation(path: str, dtype: torch.dtype = torch.bfloat16, device: str = "cuda") -> torch.Tensor:
-    """Download an activation from S3 storage."""
+async def download_tensor(path: str, dtype: torch.dtype = torch.bfloat16, device: str = "cuda") -> torch.Tensor:
+    """Download bytes and cast into a tensor from S3 storage."""
     try:
         # Download from S3
         timeout = aiohttp.ClientTimeout(total=300)  # 5 minute timeout
@@ -26,19 +26,21 @@ async def download_activation(path: str, dtype: torch.dtype = torch.bfloat16, de
             loaded_tensor, torch.Tensor
         ), f"Downloaded tensor is not a torch.Tensor: {type(loaded_tensor)}, path: {path}"
 
-        check_for_nans_and_infs(loaded_tensor, f"activation downloaded from {path}", exception_type=NanInfWarning)
+        check_for_nans_and_infs(loaded_tensor, f"tensor downloaded from {path}", exception_type=NanInfWarning)
 
         return loaded_tensor
+
     except aiohttp.ClientResponseError as e:
         if e.status >= 500:
             logger.warning(
-                f"Server error (HTTP {e.status}) downloading activation from R2: {e}. This is likely a temporary R2 issue."
+                f"Server error (HTTP {e.status}) downloading tensor from R2: {e}. This is likely a temporary R2 issue."
             )
         else:
-            logger.error(f"HTTP error downloading activation: {e}")
+            logger.error(f"HTTP error downloading tensor: {e}")
         raise
+
     except Exception as e:
-        logger.error(f"Error downloading activation: {e}")
+        logger.error(f"Error downloading tensor: {e}")
         raise
 
 

@@ -17,7 +17,7 @@ from loguru import logger
 from subnet.common_api_client import CommonAPIClient
 from subnet.model.model_mixin import ModelManager
 from subnet.utils.bt_utils import get_wallet
-from subnet.utils.s3_torch import download_activation
+from subnet.utils.s3_torch import download_tensor
 from subnet.utils.vector_utils import (
     check_for_nans_and_infs,
     flatten_optimizer_state,
@@ -80,15 +80,26 @@ class BaseNeuron:
         )
         return self
 
-    async def build_chunk_data(self, partition: MinerPartition):
+    async def build_chunk_data(self, partition: MinerPartition) -> MinerPartition:
+        """Builds the chunk data for a partition by downloading the metadata and then creating a ChunkMetadata object.
+
+        Args:
+            partition (MinerPartition): The partition to build the chunk data for
+
+        Returns:
+            MinerPartition: The partition with the chunk data
+        """
         weight_metadata_bytes: bytes = await download_file(presigned_url=partition.weight_metadata_path)
         weight_metadata: dict = json.loads(weight_metadata_bytes)
+
         optimizer_state_metadata_bytes: bytes = await download_file(
             presigned_url=partition.optimizer_state_metadata_path
         )
         optimizer_state_metadata: dict = json.loads(optimizer_state_metadata_bytes)
+
         wm = weight_metadata["sections"][str(partition.chunk_number)]
         om = optimizer_state_metadata["sections"][str(partition.chunk_number)]
+
         weight_metadata = ChunkMetadata(
             start_idx=wm["start_idx"],
             end_idx=wm["end_idx"],
@@ -111,8 +122,13 @@ class BaseNeuron:
             chunk_number=partition.chunk_number,
             data_type="optimizer_state",
         )
-        partition.weight_data = await format_chunk_data(weight_metadata, partition.chunk_number)
-        partition.optimizer_state_data = await format_chunk_data(optimizer_state_metadata, partition.chunk_number)
+
+        # Set the chunk data for the partition
+        partition.weight_data = await format_chunk_data(metadata=weight_metadata, chunk_id=partition.chunk_number)
+        partition.optimizer_state_data = await format_chunk_data(
+            metadata=optimizer_state_metadata, chunk_id=partition.chunk_number
+        )
+
         return partition
 
     async def download_and_set_weights_and_optimizer_state(
@@ -167,46 +183,47 @@ class BaseNeuron:
                 exception_type=NanInfWarning,
             )
 
+            num_weights = new_weights.numel()
+            num_optimizer_state = new_optimizer_state.numel()
+
+            total_weights_downloaded = 0
+            total_optimizer_state_downloaded = 0
+
             for idx, partition in enumerate(merged_partitions):
                 logger.info(f"Downloading merged partition {idx + 1}/{total_parts} (chunk {partition.chunk_number})")
-                new_partition: MinerPartition = await self.build_chunk_data(partition)
+                new_partition: MinerPartition = await self.build_chunk_data(partition=partition)
 
                 try:
-                    weight_shard = await download_activation(
+                    weight_shard = await download_tensor(
                         path=new_partition.weight_path,
                         device=device,
                     )
 
-                    shard_optimizer_state = await download_activation(
+                    shard_optimizer_state = await download_tensor(
                         path=new_partition.optimizer_state_path,
                         device=device,
                     )
 
-                    check_for_nans_and_infs(
-                        weight_shard,
-                        f"weight shard downloaded for miner {self.hotkey[:8]}",
-                        exception_type=NanInfWarning,
-                    )
-                    check_for_nans_and_infs(
-                        shard_optimizer_state,
-                        f"shard optimizer state downloaded for miner {self.hotkey[:8]}",
-                        exception_type=NanInfWarning,
-                    )
-                    logger.debug(
-                        f"Weight shard shape: {weight_shard.shape}, expected start idx: {new_partition.weight_data.chunk_start_idx}, expected end idx: {new_partition.weight_data.chunk_end_idx}, range: {new_partition.weight_data.chunk_end_idx-new_partition.weight_data.chunk_start_idx}"
-                    )
-                    new_weights[
-                        new_partition.weight_data.chunk_start_idx : new_partition.weight_data.chunk_end_idx
-                    ] = weight_shard
+                    weight_state_start_idx = new_partition.weight_data.chunk_start_idx
+                    weight_state_end_idx = new_partition.weight_data.chunk_end_idx
+                    optimizer_state_start_idx = new_partition.optimizer_state_data.chunk_start_idx
+                    optimizer_state_end_idx = new_partition.optimizer_state_data.chunk_end_idx
 
                     logger.debug(
-                        f"Shard optimizer state shape: {shard_optimizer_state.shape}, expected start idx: {new_partition.optimizer_state_data.chunk_start_idx}, expected end idx: {new_partition.optimizer_state_data.chunk_end_idx}, range: {new_partition.optimizer_state_data.chunk_end_idx-new_partition.optimizer_state_data.chunk_start_idx}"
+                        f"Weight shard shape: {weight_shard.shape}, expected start idx: {weight_state_start_idx}, expected end idx: {weight_state_end_idx}, range: {weight_state_end_idx-weight_state_start_idx}"
                     )
-                    new_optimizer_state[
-                        new_partition.optimizer_state_data.chunk_start_idx : new_partition.optimizer_state_data.chunk_end_idx
-                    ] = shard_optimizer_state
+                    new_weights[weight_state_start_idx:weight_state_end_idx] = weight_shard
+
                     logger.debug(
-                        f"Applied partition {partition.chunk_number}: weights[{new_partition.weight_data.chunk_start_idx}:{new_partition.weight_data.chunk_end_idx}] optimizer[{new_partition.optimizer_state_data.chunk_start_idx}:{new_partition.optimizer_state_data.chunk_end_idx}]"
+                        f"Shard optimizer state shape: {shard_optimizer_state.shape}, expected start idx: {optimizer_state_start_idx}, expected end idx: {optimizer_state_end_idx}, range: {optimizer_state_end_idx-optimizer_state_start_idx}"
+                    )
+                    new_optimizer_state[optimizer_state_start_idx:optimizer_state_end_idx] = shard_optimizer_state
+
+                    total_weights_downloaded += weight_shard.numel()
+                    total_optimizer_state_downloaded += shard_optimizer_state.numel()
+
+                    logger.debug(
+                        f"Applied partition {partition.chunk_number}: weights[{weight_state_start_idx}:{weight_state_end_idx}] optimizer[{optimizer_state_start_idx}:{optimizer_state_end_idx}]"
                     )
 
                 except Exception as e:
@@ -215,6 +232,9 @@ class BaseNeuron:
 
             logger.debug(
                 f"Downloaded {total_parts - partition_download_error_counter} / {total_parts} partitions inside download_and_set_weights_and_optimizer_state for hotkey {self.hotkey[:8]}"
+            )
+            logger.info(
+                f"download_and_set_weights_and_optimizer_state downloaded {total_weights_downloaded} / {num_weights} ({(total_weights_downloaded/num_weights)*100}%) weights and {total_optimizer_state_downloaded} / {num_optimizer_state} ({(total_optimizer_state_downloaded/num_optimizer_state)*100}%) optimizer state"
             )
 
             # assign weights to self.model
