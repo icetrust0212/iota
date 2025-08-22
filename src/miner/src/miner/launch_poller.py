@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
     async def main():
         await asyncio.gather(
-            poller.activation_polling_shooter(interval=5),
+            poller.activation_polling_shooter(interval=0.5),
             poller.prune_shooter(),  # adjust interval as needed
             poller.get_registration_data()
         )
