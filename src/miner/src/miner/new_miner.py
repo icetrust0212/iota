@@ -73,6 +73,7 @@ class HealthServerMixin:
                     "uid": getattr(self, "uid", "N/A"),
                     "registered": getattr(self, "reregister_needed", True) is False,
                     "timestamp": time.time(),
+                    "spec_version": common_settings.__SPEC_VERSION__,
                 }
             )
 

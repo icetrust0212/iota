@@ -17,7 +17,7 @@ LOG_FILE_ENABLED = os.getenv("LOG_FILE_ENABLED") == "True"
 TEST_MODE = os.getenv("TEST_MODE") == "True"
 
 # Bittensor settings
-__SPEC_VERSION__ = 10_004
+__SPEC_VERSION__ = 10_005
 __VALIDATOR_SPEC_VERSION__ = 4065
 BITTENSOR = os.getenv("BITTENSOR") == "True"
 MAX_NUM_PARTS = int(os.getenv("MAX_NUM_PARTS", 10000))

@@ -101,15 +101,16 @@ async def get_chunk_metadata_for_all_partitions(
                     "optimizer_state": optimizer_state_metadata_info,
                 }
             except Exception as e:
-                logger.exception(f"Error getting chunk metadata for partition {partition.chunk_number}: {e}")
+                logger.error(f"Error getting chunk metadata for partition {partition.chunk_number}: {e}")
                 continue
 
         return metadata_infos
+
     except Exception as e:
         logger.exception(
             f"Error getting chunk metadata for all partitions. This is likely due to bad metadata being uploaded but is not a fatal error.: {e}"
         )
-        logger.warning(f"Bad metadata; WEIGHTS: {weight_metadata} | OPTIMIZER STATE: {optimizer_state_metadata}")
+        logger.error(f"Bad metadata; WEIGHTS: {weight_metadata} | OPTIMIZER STATE: {optimizer_state_metadata}")
         return None
 
 
