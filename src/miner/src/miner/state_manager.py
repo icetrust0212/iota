@@ -32,13 +32,16 @@ class DiskSnapshotCache:
         if not self.path.exists():
             return {}
         # map_location="cpu" avoids GPU init issues on load
-        return torch.load(self.path, map_location="cpu")
+        return torch.load(self.path, map_location="cpu", weights_only=False)
 
     def save(self, cache: Dict[str, CacheEntry]) -> None:
-        tmp = self.path.with_suffix(".tmp")
-        # atomic replace to avoid partial writes if process crashes
-        torch.save(cache, tmp)
-        os.replace(tmp, self.path)
+        try:
+            tmp = self.path.with_suffix(".tmp")
+            # atomic replace to avoid partial writes if process crashes
+            torch.save(cache, tmp)
+            os.replace(tmp, self.path)
+        except Exception as e:
+            logger.info(f"Error while saving cache: {e}")
 
 class StateManager:
     def __init__(self, wallet: Wallet) -> None:
@@ -58,6 +61,7 @@ class StateManager:
 
         self._disk = DiskSnapshotCache("./cache_snapshot.pt")
         self.cache: dict[str, CacheEntry] = self._disk.load()  # load on boot
+        logger.info(f"Cache: {self.cache}, len: {len(self.cache)}")
 
 
     def set_state(self, state: LayerPhase):
@@ -78,7 +82,7 @@ class StateManager:
 
     def remove_from_cache(self, activation_id: str):
         del self.cache[activation_id]
-        self._disk.save(self._cache)
+        self._disk.save(self.cache)
 
     async def out_of_cache(self) -> bool:
         if ooc := len(self.cache) >= common_settings.MAX_ACTIVATION_CACHE_SIZE:
