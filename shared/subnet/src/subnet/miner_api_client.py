@@ -19,6 +19,9 @@ from common.utils.shared_states import LayerPhase
 from loguru import logger
 from subnet.common_api_client import CommonAPIClient
 from substrateinterface.keypair import Keypair
+from common import settings as common_settings
+import requests
+import time
 
 class MinerAPIClient(CommonAPIClient):
     @classmethod
@@ -35,8 +38,69 @@ class MinerAPIClient(CommonAPIClient):
             raise
 
     @classmethod
+    async def estimate_layer(cls, hotkey: Keypair):
+        """
+        Returns:
+           int: The layer number which is estimated by orchestrator
+
+        This method:
+        1. Determines the layer with the least miners
+        2. Assigns the miner to that layer
+        3. Updates the miner's layer in the registry
+        """
+        logger.warning(f"Estimating layer..{hotkey.ss58_address}")
+        # Get count of miners per layer
+        layer_counts = {l: 0 for l in range(common_settings.N_LAYERS)}
+        URL = "https://iota.macrocosmos.ai/api/mainnet/miners"
+        current_layer = None
+
+        try:
+            resp = requests.get(URL, timeout=15)
+            miners_grid_status = resp.json()
+            for miner in miners_grid_status["miners"]:
+                if miner["layer"] is not None:
+                    layer = miner["layer"]
+                    layer_counts[layer] += 1
+                if miner["hotkey"] == hotkey.ss58_address:
+                    current_layer = miner["layer"]
+
+            logger.info(f"Layer counts: {layer_counts}")
+
+            chosen_layer = 0
+
+            # Get the layer with the least miners
+            if any(layer_counts[l] != layer_counts[0] for l in range(common_settings.N_LAYERS)):
+                min_layer = min(layer_counts, key=layer_counts.get)
+                chosen_layer = min_layer
+
+            # If the number of miners in each layer is the same, add to the layer with the least mean incentive
+            else:
+                chosen_layer = 0
+
+            logger.info(f"Chosen layer: {chosen_layer}")
+            return chosen_layer, current_layer
+        except Exception as err:
+            logger.warning(f"Error while request layer: {err}")
+            return None, None
+
+
+    @classmethod
     async def register_miner_request(cls, hotkey: Keypair) -> MinerRegistrationResponse | dict:
         try:
+            current_layer = None
+            DESIRED_LAYERS = [common_settings.N_LAYERS - 1]
+            current_time = time.time()
+            TIME_LIMIT = 60  # seconds
+
+            while True:
+                estimated_layer, current_layer = await cls.estimate_layer(hotkey=hotkey)
+                logger.info(f"Estimated layer: {estimated_layer}, current layer: {current_layer}")
+                if current_layer is not None:
+                    break
+                if estimated_layer in DESIRED_LAYERS:
+                    break
+                if time.time() - current_time > TIME_LIMIT:
+                    break
             response = await cls.orchestrator_request(method="POST", path="/miner/register", hotkey=hotkey)
             if "error_name" in response:
                 return response
