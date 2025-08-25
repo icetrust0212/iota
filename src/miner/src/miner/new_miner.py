@@ -1036,13 +1036,14 @@ class Miner(BaseNeuron, HealthServerMixin):
 
         # Prepare data
         data = activation.to_dict() if hasattr(activation, "to_dict") else activation.__dict__
-        line = json.dumps(data)
+        new_line = json.dumps(data)
 
         # Try to save with file locking and retry on conflict
         while True:
             try:
-                with open(filepath, "r+") as f:
+                with open(filepath, "a+") as f:
                     fcntl.flock(f, fcntl.LOCK_EX)
+                    f.seek(0)
                     lines = f.readlines()
 
                     # Remove only the activation with matching activation_id
@@ -1053,7 +1054,11 @@ class Miner(BaseNeuron, HealthServerMixin):
                         if obj.get("activation_id") != activation_id:
                             kept.append(line)
 
+                    f.seek(0)
+                    f.truncate(0)
                     f.writelines(kept)
+                    f.write(new_line)
+
                     f.flush()
                     os.fsync(f.fileno())
 

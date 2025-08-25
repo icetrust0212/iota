@@ -20,7 +20,6 @@ from loguru import logger
 from subnet.common_api_client import CommonAPIClient
 from substrateinterface.keypair import Keypair
 
-
 class MinerAPIClient(CommonAPIClient):
     @classmethod
     async def get_targets(cls, get_targets_request: GetTargetsRequest, hotkey: Keypair) -> str | BaseErrorModel:
