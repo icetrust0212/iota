@@ -90,7 +90,7 @@ class MinerAPIClient(CommonAPIClient):
             current_layer = None
             DESIRED_LAYERS = [common_settings.N_LAYERS - 1]
             current_time = time.time()
-            TIME_LIMIT = 60  # seconds
+            TIME_LIMIT = 300  # seconds
 
             while True:
                 estimated_layer, current_layer = await cls.estimate_layer(hotkey=hotkey)
