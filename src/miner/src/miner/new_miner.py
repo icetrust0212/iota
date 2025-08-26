@@ -308,12 +308,6 @@ class Miner(BaseNeuron, HealthServerMixin):
                         common_settings.SEQUENCE_LENGTH,
                         common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
                     )
-                    if not common_settings.MOCK:
-                        input_activations = input_activations.reshape(
-                            -1,
-                            common_settings.SEQUENCE_LENGTH,
-                            common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
-                        )
 
             # Perform the actual forward pass
             output_activations, state = await self.model_manager._forward(
