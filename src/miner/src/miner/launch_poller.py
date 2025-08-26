@@ -117,7 +117,7 @@ class ActivationPoller:
             logger.error(f"Failed to parse isoformat time: {e}")
             return time.time()  # fallback if bad format
 
-    async def prune_shooter(self, interval: float = 60):
+    async def prune_shooter(self, interval: float = 20):
         while True:
             try:
                 await self.prune_old_activations(direction="forward")
@@ -126,7 +126,7 @@ class ActivationPoller:
                 logger.error(f"Prune error: {e}")
             await asyncio.sleep(interval)
 
-    async def prune_old_activations(self, direction: str, base_dir: str = ".", max_age_minutes = 15):
+    async def prune_old_activations(self, direction: str, base_dir: str = ".", max_age_minutes = 0.8):
         max_age = max_age_minutes * 60
 
         # base_dir = os.path.dirname(os.path.abspath(__file__))
