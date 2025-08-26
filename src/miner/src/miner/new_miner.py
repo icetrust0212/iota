@@ -315,49 +315,49 @@ class Miner(BaseNeuron, HealthServerMixin):
                             common_settings.MODEL_CFG.get("bottleneck_dim") or common_settings.MODEL_CFG["emb_dim"],
                         )
 
-                # Perform the actual forward pass
-                output_activations, state = await self.model_manager._forward(
-                    layer=self.state_manager.layer, input_activations=input_activations
+            # Perform the actual forward pass
+            output_activations, state = await self.model_manager._forward(
+                layer=self.state_manager.layer, input_activations=input_activations
+            )
+
+            self.state_manager.add_to_cache(
+                activation.activation_id,
+                CacheEntry(
+                    input_activations=input_activations,
+                    output_activations=output_activations,
+                    state=state,
+                    upload_time=time.time(),
+                ),
+            )
+
+            if self.state_manager.layer == common_settings.N_LAYERS - 1:
+                await self.compute_last_layer_loss(
+                    output_activations=output_activations,
+                    input_activation_response=activation,
+                    state=state,
+                    input_activations=input_activations,
                 )
+                return await self.backward(activation=activation)
 
-                self.state_manager.add_to_cache(
-                    activation.activation_id,
-                    CacheEntry(
-                        input_activations=input_activations,
-                        output_activations=output_activations,
-                        state=state,
-                        upload_time=time.time(),
-                    ),
-                )
+            # If we are not on the last layer, we just need to upload the activations
+            upload_response = await self.upload_tensor(
+                tensor=output_activations.detach().clone(),
+                direction="forward",
+            )
+            upload_response = await self.parse_response(response=upload_response)
 
-                if self.state_manager.layer == common_settings.N_LAYERS - 1:
-                    await self.compute_last_layer_loss(
-                        output_activations=output_activations,
-                        input_activation_response=activation,
-                        state=state,
-                        input_activations=input_activations,
-                    )
-                    return await self.backward(activation=activation)
-
-                # If we are not on the last layer, we just need to upload the activations
-                upload_response = await self.upload_tensor(
-                    tensor=output_activations.detach().clone(),
+            response = await MinerAPIClient.submit_activation_request(
+                hotkey=self.wallet.hotkey,
+                submit_activation_request=SubmitActivationRequest(
+                    activation_id=activation.activation_id,
+                    activation_path=upload_response.object_path,
                     direction="forward",
-                )
-                upload_response = await self.parse_response(response=upload_response)
-
-                response = await MinerAPIClient.submit_activation_request(
-                    hotkey=self.wallet.hotkey,
-                    submit_activation_request=SubmitActivationRequest(
-                        activation_id=activation.activation_id,
-                        activation_path=upload_response.object_path,
-                        direction="forward",
-                    ),
-                )
-                response = await self.parse_response(response=response)
-                logger.info(
-                    f"✅ Successfully completed FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
-                )
+                ),
+            )
+            response = await self.parse_response(response=response)
+            logger.info(
+                f"✅ Successfully completed FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}"
+            )
         except Exception as e:
             logger.error(
                 f"❌ Error during FORWARD pass for activation {activation.activation_id} on layer {self.state_manager.layer} | Miner: {self.hotkey[:8]}: {e}"
