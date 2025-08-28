@@ -77,3 +77,15 @@ class ValidatorAPIClient(CommonAPIClient):
         except Exception as e:
             logger.error(f"Error submitting task result to orchestrator: {e}")
             raise e
+
+    @classmethod
+    async def fetch_subnet_burn(cls) -> float | None:
+        """Fetch the subnet burn factor from the orchestrator."""
+        try:
+            response: float | None = await cls.orchestrator_request(method="GET", path="/validator/get_subnet_burn")
+            if hasattr(response, "error_name"):
+                return response
+            return response
+        except Exception as e:
+            logger.error(f"Error fetching subnet burn factor from orchestrator: {e}")
+            raise e

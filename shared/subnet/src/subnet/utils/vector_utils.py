@@ -21,9 +21,6 @@ def flatten_optimizer_state(
     tensors = []
     tensor_shapes = []
 
-    if len(state_dict["state"]) == 0:
-        optimizer.step()
-
     for group in state_dict["state"].values():
         for k, v in group.items():
             if k == "step":

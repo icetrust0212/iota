@@ -70,9 +70,6 @@ class Validator(BaseNeuron, HealthServerMixin, BaseValidator):
         self.weight_version: str | None = None
         self.external_ip: str | None = None
 
-        # Weight setting parameters
-        self.burn_factor: float = common_settings.BURN_FACTOR
-
         # Circuit breaker state
         self._orchestrator_failure_count: int = 0
         self._last_orchestrator_failure_time: float = 0
@@ -251,20 +248,20 @@ class Validator(BaseNeuron, HealthServerMixin, BaseValidator):
                 # Submit global weights to Bittensor
                 if len(global_weights) > 0:
                     logger.debug(f"Received global weights: {global_weights}")
-                    self.set_weights(weights=global_weights)
+                    await self.set_weights(weights=global_weights)
                 else:
                     logger.warning("No global weights received, temporarily copying weights from the chain")
-                    self.set_weights(weights=self.copy_weights_from_chain())
+                    await self.set_weights(weights=self.copy_weights_from_chain())
 
                 logger.debug(f"Weight loop iteration {loop_count} completed successfully")
 
             except TimeoutError as e:
                 logger.error(f"TimeoutError in weight loop iteration {loop_count}: {e}")
-                self.set_weights(weights=self.copy_weights_from_chain())
+                await self.set_weights(weights=self.copy_weights_from_chain())
 
             except Exception as e:
                 logger.exception(f"Error in weight loop iteration {loop_count}: {e}")
-                self.set_weights(weights=self.copy_weights_from_chain())
+                await self.set_weights(weights=self.copy_weights_from_chain())
 
             finally:
                 logger.info(
@@ -401,7 +398,7 @@ class Validator(BaseNeuron, HealthServerMixin, BaseValidator):
                 # Wait before retrying
                 await asyncio.sleep(10)
 
-    def set_weights(self, weights: dict[int, float]):
+    async def set_weights(self, weights: dict[int, float]):
         """
         Sets the validator weights to the metagraph hotkeys based on the global weights.
         """
@@ -441,9 +438,18 @@ class Validator(BaseNeuron, HealthServerMixin, BaseValidator):
             # Normalize weights
             raw_weights = torch.nn.functional.normalize(scores, p=1, dim=0)
 
+            # Fetch the burn factor from the orchestrator
+            burn_factor = None
+            try:
+                burn_factor = float(await ValidatorAPIClient.fetch_subnet_burn())
+            except Exception as e:
+                logger.warning(f"Error fetching burn factor: {e}")
+            if burn_factor is None:
+                burn_factor = common_settings.FALLBACK_BURN_FACTOR
+
             raw_weights = apply_burn_factor(
                 raw_weights=raw_weights,
-                burn_factor=self.burn_factor,
+                burn_factor=burn_factor,
                 netuid=int(common_settings.NETUID),
                 owner_uid=common_settings.OWNER_UID,
             )
